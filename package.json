@@ -9,7 +9,7 @@
   "type": "module",
   "engines": {
     "node": "20.x",
-    "pnpm": "8.x"
+    "pnpm": ">=6.0.0"
   },
   "dependencies": {
     "react": "^18.3.1",
