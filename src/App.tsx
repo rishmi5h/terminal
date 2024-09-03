@@ -5,13 +5,27 @@ import { Theme, themes } from './components/Themes.tsx';
 function App() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState<string[]>([]);
-  const [theme, setTheme] = useState<Theme>(themes.default);
+  const [theme, setTheme] = useState<Theme>(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme && themes[savedTheme as keyof typeof themes]
+      ? themes[savedTheme as keyof typeof themes]
+      : themes.default;
+  });
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     inputRef.current?.focus();
     handleCommand('welcome');
   }, []);
+
+  useEffect(() => {
+    const currentThemeName = Object.keys(themes).find(
+      (key) => themes[key as keyof typeof themes] === theme,
+    );
+    if (currentThemeName) {
+      localStorage.setItem('theme', currentThemeName);
+    }
+  }, [theme]);
 
   const handleCommand = (command: string) => {
     const [cmd, ...args] = command.trim().split(' ');
@@ -28,9 +42,9 @@ function App() {
         setOutput([
           ...output,
           `$ ${command}`,
-          "Hi, I'm [Your Name]!",
-          "I'm a [Your Job Title] with a passion for [Your Interests].",
-          'I have [X] years of experience in [Your Field].',
+          "Hi, I'm Rishabh Mishra!",
+          "I'm a Software Engineer with a passion for AI and Machine Learning.",
+          'I have 3 years of experience in Software Development.',
           'Type "skills" to see my technical expertise.',
         ]);
         break;
@@ -39,10 +53,10 @@ function App() {
           ...output,
           `$ ${command}`,
           'My Technical Skills:',
-          '- Programming Languages: [List your languages]',
-          '- Frameworks: [List your frameworks]',
-          '- Tools: [List your tools]',
-          '- Other: [Any other relevant skills]',
+          '- Programming Languages: Java, JavaScript, TypeScript, Python, SQL',
+          '- Frameworks & Libraries: React, Next.js, Tailwind CSS, Node.js, Spring Boot, Express.js',
+          '- Tools: Git, Docker, Kubernetes, Jenkins, Airflow, AWS',
+          '- Other: Kafka, Oracle DB, PostgreSQL, Redis',
         ]);
         break;
       case 'projects':
