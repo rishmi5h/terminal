@@ -13,10 +13,13 @@ function App() {
   }, []);
 
   const commands = {
+    about: 'Displays information about me',
     clear: 'Clears the terminal',
-    date: 'Shows the current date and time',
-    echo: 'Repeats the input',
+    contact: 'Displays my contact information',
+    gui: 'Opens my portfolio website in a new tab',
     help: 'Shows this help message',
+    projects: 'Shows my notable projects',
+    skills: 'Lists my technical skills',
     theme: 'Changes the color theme (usage: theme <name>)',
     welcome: 'Shows the welcome message',
   };
@@ -27,9 +30,59 @@ function App() {
     switch (cmd.toLowerCase()) {
       case 'welcome':
         setOutput([
-          'Welcome to the React Terminal!',
+          'Welcome to My Terminal Portfolio!',
           'Type "help" to see available commands.',
           '',
+        ]);
+        break;
+      case 'about':
+        setOutput([
+          ...output,
+          `$ ${command}`,
+          "Hi, I'm [Your Name]!",
+          "I'm a [Your Job Title] with a passion for [Your Interests].",
+          'I have [X] years of experience in [Your Field].',
+          'Type "skills" to see my technical expertise.',
+        ]);
+        break;
+      case 'skills':
+        setOutput([
+          ...output,
+          `$ ${command}`,
+          'My Technical Skills:',
+          '- Programming Languages: [List your languages]',
+          '- Frameworks: [List your frameworks]',
+          '- Tools: [List your tools]',
+          '- Other: [Any other relevant skills]',
+        ]);
+        break;
+      case 'projects':
+        setOutput([
+          ...output,
+          `$ ${command}`,
+          'My Notable Projects:',
+          '1. [Project Name 1]',
+          '   Description: [Brief description]',
+          '   Technologies: [Tech stack used]',
+          '   Link: [Project link if available]',
+          '',
+          '2. [Project Name 2]',
+          '   Description: [Brief description]',
+          '   Technologies: [Tech stack used]',
+          '   Link: [Project link if available]',
+          '',
+          'Type "contact" to see how to reach me for collaborations.',
+        ]);
+        break;
+      case 'contact':
+        setOutput([
+          ...output,
+          `$ ${command}`,
+          'Contact Information:',
+          'Email: [Your email]',
+          'LinkedIn: [Your LinkedIn profile URL]',
+          'GitHub: [Your GitHub profile URL]',
+          'Twitter: [Your Twitter handle]',
         ]);
         break;
       case 'help':
@@ -42,12 +95,6 @@ function App() {
         break;
       case 'clear':
         setOutput([]);
-        break;
-      case 'echo':
-        setOutput([...output, `$ ${command}`, args.join(' ')]);
-        break;
-      case 'date':
-        setOutput([...output, `$ ${command}`, new Date().toString()]);
         break;
       case 'theme':
         if (args.length === 0) {
@@ -75,11 +122,20 @@ function App() {
           }
         }
         break;
+      case 'gui':
+        setOutput([
+          ...output,
+          `$ ${command}`,
+          'Opening portfolio website in a new tab...',
+        ]);
+        window.open('https://rishmi5h.com', '_blank');
+        break;
       default:
         setOutput([
           ...output,
           `$ ${command}`,
           `Command not recognized: ${cmd}`,
+          'Type "help" to see available commands.',
         ]);
     }
   };
@@ -91,8 +147,8 @@ function App() {
   };
 
   return (
-    <div className={`${theme.bg} ${theme.text} h-screen p-4 font-mono`}>
-      <div className="mb-4">
+    <div className={`${theme.bg} ${theme.text} min-h-screen p-4 font-mono`}>
+      <div className="mb-4 whitespace-pre-wrap">
         {output.map((line, index) => (
           <div key={index}>{line}</div>
         ))}
