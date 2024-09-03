@@ -82,10 +82,10 @@ function App() {
           ...output,
           `$ ${command}`,
           'Contact Information:',
-          'Email: [Your email]',
-          'LinkedIn: [Your LinkedIn profile URL]',
-          'GitHub: [Your GitHub profile URL]',
-          'Twitter: [Your Twitter handle]',
+          'Email: mail@rishmi5h.com',
+          'LinkedIn: https://www.linkedin.com/in/rishmi5h/',
+          'GitHub: https://github.com/rishmi5h',
+          'Twitter: https://twitter.com/rishmi5h',
         ]);
         break;
       case 'help':
