@@ -54,10 +54,8 @@ function App() {
           setOutput([
             ...output,
             `$ ${command}`,
-            'Available themes: ',
+            'Available themes:',
             ...Object.keys(themes).map((t) => `  ${t}`),
-            'usage: theme <name>',
-            'eg: theme blue',
           ]);
         } else {
           const newTheme = themes[args[0] as keyof typeof themes];
@@ -102,7 +100,7 @@ function App() {
       <form className="flex" onSubmit={handleSubmit}>
         <span>$&nbsp;</span>
         <input
-          className={`flex-grow ${theme.input} outline-none`}
+          className={`flex-grow ${theme.bg} ${theme.text} outline-none`}
           onChange={(e) => setInput(e.target.value)}
           ref={inputRef}
           type="text"
