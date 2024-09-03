@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Theme, Themes, themes } from './components/Themes.tsx';
+import { Theme, themes } from './components/Themes.tsx';
 
 function App() {
   const [input, setInput] = useState('');
@@ -9,6 +9,7 @@ function App() {
 
   useEffect(() => {
     inputRef.current?.focus();
+    handleCommand('welcome');
   }, []);
 
   const commands = {
@@ -17,12 +18,20 @@ function App() {
     echo: 'Repeats the input',
     help: 'Shows this help message',
     theme: 'Changes the color theme (usage: theme <name>)',
+    welcome: 'Shows the welcome message',
   };
 
   const handleCommand = (command: string) => {
     const [cmd, ...args] = command.trim().split(' ');
 
     switch (cmd.toLowerCase()) {
+      case 'welcome':
+        setOutput([
+          'Welcome to the React Terminal!',
+          'Type "help" to see available commands.',
+          '',
+        ]);
+        break;
       case 'help':
         setOutput([
           ...output,
@@ -45,8 +54,10 @@ function App() {
           setOutput([
             ...output,
             `$ ${command}`,
-            'Available themes:',
+            'Available themes: ',
             ...Object.keys(themes).map((t) => `  ${t}`),
+            'usage: theme <name>',
+            'eg: theme blue',
           ]);
         } else {
           const newTheme = themes[args[0] as keyof typeof themes];
@@ -83,7 +94,6 @@ function App() {
 
   return (
     <div className={`${theme.bg} ${theme.text} h-screen p-4 font-mono`}>
-      <Themes currentTheme={theme} setTheme={setTheme} />
       <div className="mb-4">
         {output.map((line, index) => (
           <div key={index}>{line}</div>
