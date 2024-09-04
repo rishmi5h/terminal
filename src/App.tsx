@@ -176,15 +176,17 @@ function App() {
           <div key={index}>{line}</div>
         ))}
       </div>
-      <form className="flex" onSubmit={handleSubmit}>
-        <span>{getPrompt()}</span>
-        <input
-          className={`flex-grow ${theme.bg} ${theme.text} outline-none`}
-          onChange={(e) => setInput(e.target.value)}
-          ref={inputRef}
-          type="text"
-          value={input}
-        />
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-wrap items-center">
+          <span className="mb-2 mr-2 sm:mb-0">{getPrompt()}</span>
+          <input
+            className={`flex-grow ${theme.bg} ${theme.text} min-w-[200px] outline-none`}
+            onChange={(e) => setInput(e.target.value)}
+            ref={inputRef}
+            type="text"
+            value={input}
+          />
+        </div>
       </form>
     </div>
   );
