@@ -27,6 +27,24 @@ function App() {
     }
   }, [theme]);
 
+  const getPrompt = () => {
+    const currentThemeName = Object.keys(themes).find(
+      (key) => themes[key as keyof typeof themes] === theme,
+    );
+    switch (currentThemeName) {
+      case 'mac-terminal':
+        return 'rishmi5h@macbook ~ % ';
+      case 'windows-cmd':
+        return String.raw`C:\Users\rishmi5h> `;
+      case 'windows-powershell':
+        return String.raw`PS C:\Users\rishmi5h> `;
+      case 'ubuntu':
+        return 'rishmi5h@ubuntu:~$ ';
+      default:
+        return '$ ';
+    }
+  };
+
   const handleCommand = (command: string) => {
     const [cmd, ...args] = command.trim().split(' ');
 
@@ -103,9 +121,10 @@ function App() {
         if (args.length === 0) {
           setOutput([
             ...output,
-            `$ ${command}`,
+            `${getPrompt()}${command}`,
             'Available themes:',
             ...Object.keys(themes).map((t) => `  ${t}`),
+            'Usage: theme <name>',
           ]);
         } else {
           const newTheme = themes[args[0] as keyof typeof themes];
@@ -113,14 +132,15 @@ function App() {
             setTheme(newTheme);
             setOutput([
               ...output,
-              `$ ${command}`,
+              `${getPrompt()}${command}`,
               `Theme changed to ${args[0]}`,
             ]);
           } else {
             setOutput([
               ...output,
-              `$ ${command}`,
+              `${getPrompt()}${command}`,
               `Theme not found: ${args[0]}`,
+              'Type "theme" without arguments to see available themes.',
             ]);
           }
         }
@@ -157,7 +177,7 @@ function App() {
         ))}
       </div>
       <form className="flex" onSubmit={handleSubmit}>
-        <span>$&nbsp;</span>
+        <span>{getPrompt()}</span>
         <input
           className={`flex-grow ${theme.bg} ${theme.text} outline-none`}
           onChange={(e) => setInput(e.target.value)}
