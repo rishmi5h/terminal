@@ -11,6 +11,8 @@ function App() {
       ? themes[savedTheme as keyof typeof themes]
       : themes.default;
   });
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -61,7 +63,7 @@ function App() {
           ...output,
           `$ ${command}`,
           "Hi, I'm Rishabh Mishra!",
-          "I'm a Software Engineer with a passion for AI and Machine Learning.",
+          "I'm a Software Engineer who likes to build stuff.",
           'I have 3 years of experience in Software Development.',
           'Type "skills" to see my technical expertise.',
         ]);
@@ -161,12 +163,39 @@ function App() {
           'Type "help" to see available commands.',
         ]);
     }
+
+    // Add the command to history
+    if (command.trim() !== '') {
+      setCommandHistory((prev) => [command, ...prev]);
+    }
+    setHistoryIndex(-1);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleCommand(input);
     setInput('');
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (historyIndex < commandHistory.length - 1) {
+        const newIndex = historyIndex + 1;
+        setHistoryIndex(newIndex);
+        setInput(commandHistory[newIndex]);
+      }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (historyIndex > 0) {
+        const newIndex = historyIndex - 1;
+        setHistoryIndex(newIndex);
+        setInput(commandHistory[newIndex]);
+      } else if (historyIndex === 0) {
+        setHistoryIndex(-1);
+        setInput('');
+      }
+    }
   };
 
   return (
@@ -182,6 +211,7 @@ function App() {
           <input
             className={`flex-grow ${theme.bg} ${theme.text} min-w-[200px] outline-none`}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
             ref={inputRef}
             type="text"
             value={input}
