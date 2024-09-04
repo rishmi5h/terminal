@@ -7,9 +7,6 @@ export type Theme = {
 
 export const themes: Record<string, Theme> = {
   default: { bg: 'bg-black', text: 'text-green-500' },
-  light: { bg: 'bg-white', text: 'text-black' },
-  dark: { bg: 'bg-gray-800', text: 'text-gray-200' },
-  'green-goblin': { bg: 'bg-green-900', text: 'text-green-300' },
   ubuntu: { bg: 'bg-purple-900', text: 'text-orange-200' },
   'mac-terminal': { bg: 'bg-black', text: 'text-white' },
   'windows-cmd': { bg: 'bg-black', text: 'text-gray-300' },
