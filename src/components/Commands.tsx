@@ -11,7 +11,3 @@ export const commands = {
   theme: 'Changes the color theme (usage: theme <name>)',
   welcome: 'Shows the welcome message',
 };
-
-export const specialCommands = {
-  'Up Arrow': 'Go to the previous command',
-};
