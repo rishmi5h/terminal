@@ -8,6 +8,6 @@ export const commands = {
   skills: 'Lists my technical skills',
   socials:
     'Shows my social media links. Use "socials <number>" to open a specific profile',
-  theme: 'Changes the color theme (usage: theme <name>)',
+  theme: 'Changes the terminal theme (usage: theme <name>)',
   welcome: 'Shows the welcome message',
 };
