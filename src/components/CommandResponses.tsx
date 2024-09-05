@@ -1,0 +1,35 @@
+export const commandResponses = {
+  about: [
+    "Hi, I'm Rishabh Mishra!",
+    "I'm a Software Engineer who likes to build stuff.",
+    'I have 3 years of experience in Software Development.',
+    'Type "skills" to see my technical expertise.',
+  ],
+  email: ['mail@rishmi5h.com'],
+  projects: [
+    'My Notable Projects:',
+    '1. [Project Name 1]',
+    '   Description: [Brief description]',
+    '   Technologies: [Tech stack used]',
+    '   Link: [Project link if available]',
+    '',
+    '2. [Project Name 2]',
+    '   Description: [Brief description]',
+    '   Technologies: [Tech stack used]',
+    '   Link: [Project link if available]',
+    '',
+    'Type "socials" to see my social media profiles for more information.',
+  ],
+  skills: [
+    'My Technical Skills:',
+    '- Programming Languages: Java, JavaScript, TypeScript, Python, SQL',
+    '- Frameworks & Libraries: React, Next.js, Tailwind CSS, Node.js, Spring Boot, Express.js',
+    '- Tools: Git, Docker, Kubernetes, Jenkins, Airflow, AWS',
+    '- Other: Kafka, Oracle DB, PostgreSQL, Redis',
+  ],
+  welcome: [
+    'Welcome to My Terminal Portfolio!',
+    'Type "help" to see available commands.',
+    '',
+  ],
+};

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { commandResponses } from './components/CommandResponses.tsx';
 import { commands } from './components/Commands.tsx';
 import {
   handleSpecialCommands,
@@ -81,54 +82,20 @@ function App() {
 
     switch (cmd.toLowerCase()) {
       case 'welcome':
-        setOutput([
-          'Welcome to My Terminal Portfolio!',
-          'Type "help" to see available commands.',
-          '',
-        ]);
-        break;
       case 'about':
-        setOutput([
-          ...output,
-          `${getPrompt()}${command}`,
-          "Hi, I'm Rishabh Mishra!",
-          "I'm a Software Engineer who likes to build stuff.",
-          'I have 3 years of experience in Software Development.',
-          'Type "skills" to see my technical expertise.',
-        ]);
-        break;
       case 'skills':
-        setOutput([
-          ...output,
-          `${getPrompt()}${command}`,
-          'My Technical Skills:',
-          '- Programming Languages: Java, JavaScript, TypeScript, Python, SQL',
-          '- Frameworks & Libraries: React, Next.js, Tailwind CSS, Node.js, Spring Boot, Express.js',
-          '- Tools: Git, Docker, Kubernetes, Jenkins, Airflow, AWS',
-          '- Other: Kafka, Oracle DB, PostgreSQL, Redis',
-        ]);
-        break;
       case 'projects':
+      case 'email':
         setOutput([
           ...output,
           `${getPrompt()}${command}`,
-          'My Notable Projects:',
-          '1. [Imagery]',
-          '   Description: [Brief description]',
-          '   Technologies: [Tech stack used]',
-          '   Link: [Project link if available]',
-          '',
-          '2. []',
-          '   Description: [Brief description]',
-          '   Technologies: [Tech stack used]',
-          '   Link: [Project link if available]',
-          '',
-          'Type "socials" to see my social media profiles for more information.',
+          ...commandResponses[
+            cmd.toLowerCase() as keyof typeof commandResponses
+          ],
         ]);
-        break;
-      case 'email':
-        setOutput([...output, `${getPrompt()}${command}`, 'mail@rishmi5h.com']);
-        window.location.href = 'mailto:mail@rishmi5h.com';
+        if (cmd.toLowerCase() === 'email') {
+          window.location.href = 'mailto:mail@rishmi5h.com';
+        }
         break;
       case 'help':
         setOutput([
