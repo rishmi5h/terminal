@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { commands } from './components/Commands.tsx';
+import { commands, specialCommands } from './components/Commands.tsx';
 import { Theme, themes } from './components/Themes.tsx';
 
 function App() {
@@ -114,6 +114,10 @@ function App() {
           `${getPrompt()}${command}`,
           'Available commands:',
           ...Object.entries(commands).map(([cmd, desc]) => `  ${cmd}: ${desc}`),
+          '---LINE_BREAK---', // Special marker for line break
+          ...Object.entries(specialCommands).map(
+            ([cmd, desc]) => `  ${cmd}: ${desc}`,
+          ),
         ]);
         break;
       case 'clear':
@@ -235,22 +239,13 @@ function App() {
   return (
     <div className={`${theme.bg} ${theme.text} min-h-screen p-4 font-mono`}>
       <div className="mb-4 whitespace-pre-wrap">
-        {output.map((line, index) => (
-          <div key={index}>
-            {line.startsWith('mailto:') ? (
-              <a
-                className="text-blue-500 hover:underline"
-                href={line}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {line}
-              </a>
-            ) : (
-              line
-            )}
-          </div>
-        ))}
+        {output.map((line, index) =>
+          line === '---LINE_BREAK---' ? (
+            <div key={index} className="h-4"></div> // Adds vertical space
+          ) : (
+            <div key={index}>{line}</div>
+          ),
+        )}
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-wrap items-center">
