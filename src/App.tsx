@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { commands, specialCommands } from './components/Commands.tsx';
+import { commands } from './components/Commands.tsx';
+import {
+  handleSpecialCommands,
+  specialCommands,
+} from './components/SpeicalCommands.tsx';
 import { Theme, themes } from './components/Themes.tsx';
 
 function App() {
@@ -53,6 +57,24 @@ function App() {
     { name: 'Twitter', url: 'https://twitter.com/rishmi5h' },
     { name: 'LeetCode', url: 'https://leetcode.com/rishmi5h/' },
   ];
+
+  const handleTabCompletion = () => {
+    const commandNames = Object.keys(commands);
+    const matchingCommands = commandNames.filter((cmd) =>
+      cmd.startsWith(input),
+    );
+
+    if (matchingCommands.length === 1) {
+      setInput(matchingCommands[0]);
+    } else if (matchingCommands.length > 1) {
+      setOutput([
+        ...output,
+        `${getPrompt()}${input}`,
+        'Possible completions:',
+        ...matchingCommands,
+      ]);
+    }
+  };
 
   const handleCommand = (command: string) => {
     const [cmd, ...args] = command.trim().split(' ');
@@ -216,32 +238,33 @@ function App() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      if (historyIndex < commandHistory.length - 1) {
-        const newIndex = historyIndex + 1;
-        setHistoryIndex(newIndex);
-        setInput(commandHistory[newIndex]);
-      }
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      if (historyIndex > 0) {
-        const newIndex = historyIndex - 1;
-        setHistoryIndex(newIndex);
-        setInput(commandHistory[newIndex]);
-      } else if (historyIndex === 0) {
-        setHistoryIndex(-1);
-        setInput('');
-      }
-    }
+    handleSpecialCommands(
+      e,
+      input,
+      setInput,
+      commandHistory,
+      historyIndex,
+      setHistoryIndex,
+      setOutput,
+      handleTabCompletion,
+    );
   };
 
   return (
-    <div className={`${theme.bg} ${theme.text} min-h-screen p-4 font-mono`}>
+    <div
+      className={`${theme.bg} ${theme.text} min-h-screen p-4 font-mono`}
+      onKeyDown={(e) => {
+        if (e.key === 'l' && e.ctrlKey) {
+          e.preventDefault();
+          setOutput([]);
+        }
+      }}
+      tabIndex={0}
+    >
       <div className="mb-4 whitespace-pre-wrap">
         {output.map((line, index) =>
           line === '---LINE_BREAK---' ? (
-            <div key={index} className="h-4"></div> // Adds vertical space
+            <div className="h-4" key={index}></div> // Adds vertical space
           ) : (
             <div key={index}>{line}</div>
           ),
