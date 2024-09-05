@@ -47,6 +47,13 @@ function App() {
     }
   };
 
+  const socialLinks = [
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/rishmi5h/' },
+    { name: 'GitHub', url: 'https://github.com/rishmi5h' },
+    { name: 'Twitter', url: 'https://twitter.com/rishmi5h' },
+    { name: 'LeetCode', url: 'https://leetcode.com/rishmi5h/' },
+  ];
+
   const handleCommand = (command: string) => {
     const [cmd, ...args] = command.trim().split(' ');
 
@@ -84,12 +91,12 @@ function App() {
           ...output,
           `${getPrompt()}${command}`,
           'My Notable Projects:',
-          '1. [Project Name 1]',
+          '1. [Imagery]',
           '   Description: [Brief description]',
           '   Technologies: [Tech stack used]',
           '   Link: [Project link if available]',
           '',
-          '2. [Project Name 2]',
+          '2. []',
           '   Description: [Brief description]',
           '   Technologies: [Tech stack used]',
           '   Link: [Project link if available]',
@@ -149,16 +156,38 @@ function App() {
         window.open('https://rishmi5h.com', '_blank');
         break;
       case 'socials':
-        setOutput([
-          ...output,
-          `${getPrompt()}${command}`,
-          'My Social Media Links:',
-          '- LinkedIn: https://www.linkedin.com/in/rishmi5h/',
-          '- GitHub: https://github.com/rishmi5h',
-          '- Twitter: https://twitter.com/rishmi5h',
-          '- LeetCode: https://leetcode.com/rishmi5h/',
-          // Add or remove social media links as needed
-        ]);
+        if (args.length > 0) {
+          const index = Number.parseInt(args[0]) - 1;
+          if (index >= 0 && index < socialLinks.length) {
+            const platform = socialLinks[index];
+            setOutput([
+              ...output,
+              `${getPrompt()}${command}`,
+              `Opening ${platform.name} profile...`,
+            ]);
+            window.open(platform.url, '_blank');
+          } else {
+            setOutput([
+              ...output,
+              `${getPrompt()}${command}`,
+              `Invalid option: ${args[0]}`,
+              'Please choose a number between 1 and ' + socialLinks.length,
+            ]);
+          }
+        } else {
+          setOutput([
+            ...output,
+            `${getPrompt()}${command}`,
+            'My Social Media Links:',
+            ...socialLinks.map(
+              (platform, index) =>
+                `${index + 1}. ${platform.name}: ${platform.url}`,
+            ),
+            '',
+            'To open a specific profile, use: socials <number>',
+            'eg: socials 1 opens LinkedIn',
+          ]);
+        }
         break;
       default:
         setOutput([
@@ -210,10 +239,10 @@ function App() {
           <div key={index}>
             {line.startsWith('mailto:') ? (
               <a
-                href={line}
                 className="text-blue-500 hover:underline"
-                target="_blank"
+                href={line}
                 rel="noopener noreferrer"
+                target="_blank"
               >
                 {line}
               </a>
