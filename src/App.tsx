@@ -61,7 +61,7 @@ function App() {
       case 'about':
         setOutput([
           ...output,
-          `$ ${command}`,
+          `${getPrompt()}${command}`,
           "Hi, I'm Rishabh Mishra!",
           "I'm a Software Engineer who likes to build stuff.",
           'I have 3 years of experience in Software Development.',
@@ -71,7 +71,7 @@ function App() {
       case 'skills':
         setOutput([
           ...output,
-          `$ ${command}`,
+          `${getPrompt()}${command}`,
           'My Technical Skills:',
           '- Programming Languages: Java, JavaScript, TypeScript, Python, SQL',
           '- Frameworks & Libraries: React, Next.js, Tailwind CSS, Node.js, Spring Boot, Express.js',
@@ -82,7 +82,7 @@ function App() {
       case 'projects':
         setOutput([
           ...output,
-          `$ ${command}`,
+          `${getPrompt()}${command}`,
           'My Notable Projects:',
           '1. [Project Name 1]',
           '   Description: [Brief description]',
@@ -94,24 +94,17 @@ function App() {
           '   Technologies: [Tech stack used]',
           '   Link: [Project link if available]',
           '',
-          'Type "contact" to see how to reach me for collaborations.',
+          'Type "socials" to see my social media profiles for more information.',
         ]);
         break;
-      case 'contact':
-        setOutput([
-          ...output,
-          `$ ${command}`,
-          'Contact Information:',
-          'Email: mail@rishmi5h.com',
-          'LinkedIn: https://www.linkedin.com/in/rishmi5h/',
-          'GitHub: https://github.com/rishmi5h',
-          'Twitter: https://twitter.com/rishmi5h',
-        ]);
+      case 'email':
+        setOutput([...output, `${getPrompt()}${command}`, 'mail@rishmi5h.com']);
+        window.location.href = 'mailto:mail@rishmi5h.com';
         break;
       case 'help':
         setOutput([
           ...output,
-          `$ ${command}`,
+          `${getPrompt()}${command}`,
           'Available commands:',
           ...Object.entries(commands).map(([cmd, desc]) => `  ${cmd}: ${desc}`),
         ]);
@@ -150,15 +143,27 @@ function App() {
       case 'gui':
         setOutput([
           ...output,
-          `$ ${command}`,
+          `${getPrompt()}${command}`,
           'Opening portfolio website in a new tab...',
         ]);
         window.open('https://rishmi5h.com', '_blank');
         break;
+      case 'socials':
+        setOutput([
+          ...output,
+          `${getPrompt()}${command}`,
+          'My Social Media Links:',
+          '- LinkedIn: https://www.linkedin.com/in/rishmi5h/',
+          '- GitHub: https://github.com/rishmi5h',
+          '- Twitter: https://twitter.com/rishmi5h',
+          '- LeetCode: https://leetcode.com/rishmi5h/',
+          // Add or remove social media links as needed
+        ]);
+        break;
       default:
         setOutput([
           ...output,
-          `$ ${command}`,
+          `${getPrompt()}${command}`,
           `Command not recognized: ${cmd}`,
           'Type "help" to see available commands.',
         ]);
@@ -202,7 +207,20 @@ function App() {
     <div className={`${theme.bg} ${theme.text} min-h-screen p-4 font-mono`}>
       <div className="mb-4 whitespace-pre-wrap">
         {output.map((line, index) => (
-          <div key={index}>{line}</div>
+          <div key={index}>
+            {line.startsWith('mailto:') ? (
+              <a
+                href={line}
+                className="text-blue-500 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {line}
+              </a>
+            ) : (
+              line
+            )}
+          </div>
         ))}
       </div>
       <form onSubmit={handleSubmit}>
