@@ -60,20 +60,42 @@ function App() {
   ];
 
   const handleTabCompletion = () => {
+    const [cmd, ...args] = input.trim().split(' ');
     const commandNames = Object.keys(commands);
-    const matchingCommands = commandNames.filter((cmd) =>
-      cmd.startsWith(input),
-    );
 
-    if (matchingCommands.length === 1) {
-      setInput(matchingCommands[0]);
-    } else if (matchingCommands.length > 1) {
-      setOutput([
-        ...output,
-        `${getPrompt()}${input}`,
-        'Possible completions:',
-        ...matchingCommands,
-      ]);
+    if (cmd.toLowerCase() === 'theme' && args.length === 1) {
+      // Handle theme completion
+      const themeNames = Object.keys(themes);
+      const matchingThemes = themeNames.filter((theme) =>
+        theme.startsWith(args[0].toLowerCase()),
+      );
+
+      if (matchingThemes.length === 1) {
+        setInput(`theme ${matchingThemes[0]}`);
+      } else if (matchingThemes.length > 1) {
+        setOutput([
+          ...output,
+          `${getPrompt()}${input}`,
+          'Possible theme completions:',
+          ...matchingThemes,
+        ]);
+      }
+    } else {
+      // Handle regular command completion
+      const matchingCommands = commandNames.filter((command) =>
+        command.startsWith(cmd.toLowerCase()),
+      );
+
+      if (matchingCommands.length === 1) {
+        setInput(matchingCommands[0]);
+      } else if (matchingCommands.length > 1) {
+        setOutput([
+          ...output,
+          `${getPrompt()}${input}`,
+          'Possible completions:',
+          ...matchingCommands,
+        ]);
+      }
     }
   };
 
