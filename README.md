@@ -8,16 +8,16 @@
 
 ## Themes
 
+- Default
+  ![Default-img](/git-assets/default.png)
 - Mac-terminal
   ![Mac-terminal-img](/git-assets/mac-terminal.png)
-- Windows-cmd
-  ![Windows-cmd-img](/git-assets/windows-cmd.png)
 - Windows-Powershell
   ![Windows-Powershell-img](/git-assets/windows-powershell.png)
 - Ubuntu
   ![Ubuntu-img](/git-assets/ubuntu.png)
-- Default
-  ![Default-img](/git-assets/default.png)
+- Windows-cmd
+  ![Windows-cmd-img](/git-assets/windows-cmd.png)
 
 ## Technologies
 
