@@ -6,8 +6,7 @@ export const commands = {
   help: 'Shows this help message',
   projects: 'Shows my notable projects',
   skills: 'Lists my technical skills',
-  socials:
-    'Shows my social media links. Use "socials <number>" to open a specific profile',
-  theme: 'Changes the terminal theme (usage: theme <name>)',
+  socials: 'Shows my social media links',
+  theme: 'Shows the current and available themes',
   welcome: 'Shows the welcome message',
 };
