@@ -5,6 +5,7 @@ import {
   handleSpecialCommands,
   specialCommands,
 } from './components/SpeicalCommands.tsx';
+import TerminalButtons from './components/TerminalButtons.tsx';
 import { Theme, themes } from './components/Themes.tsx';
 
 function App() {
@@ -125,7 +126,7 @@ function App() {
           `${getPrompt()}${command}`,
           'Available commands:',
           ...Object.entries(commands).map(([cmd, desc]) => `  ${cmd}: ${desc}`),
-          '---LINE_BREAK---', // Special marker for line break
+          '---LINE_BREAK---',
           ...Object.entries(specialCommands).map(
             ([cmd, desc]) => `  ${cmd}: ${desc}`,
           ),
@@ -240,38 +241,55 @@ function App() {
   };
 
   return (
-    <div
-      className={`${theme.bg} ${theme.text} min-h-screen p-4 font-mono`}
-      onKeyDown={(e) => {
-        if (e.key === 'l' && e.ctrlKey) {
-          e.preventDefault();
-          setOutput([]);
-        }
-      }}
-      tabIndex={0}
-    >
-      <div className="mb-4 whitespace-pre-wrap">
-        {output.map((line, index) =>
-          line === '---LINE_BREAK---' ? (
-            <div className="h-4" key={index}></div> // Adds vertical space
-          ) : (
-            <div key={index}>{line}</div>
-          ),
-        )}
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-wrap items-center">
-          <span className="mb-2 mr-2 sm:mb-0">{getPrompt()}</span>
-          <input
-            className={`flex-grow ${theme.bg} ${theme.text} min-w-[200px] outline-none`}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            ref={inputRef}
-            type="text"
-            value={input}
+    <div className={`p-4} flex min-h-screen items-center justify-center`}>
+      <div
+        className={`${theme.bg} ${theme.text} w-full max-w-3xl border ${
+          theme.border
+        } overflow-hidden rounded-lg`}
+      >
+        <div className="${theme.border} border-b p-2">
+          <TerminalButtons
+            theme={
+              Object.keys(themes).find(
+                (key) => themes[key as keyof typeof themes] === theme,
+              ) || 'default'
+            }
           />
         </div>
-      </form>
+        <div
+          className="p-4"
+          onKeyDown={(e) => {
+            if (e.key === 'l' && e.ctrlKey) {
+              e.preventDefault();
+              setOutput([]);
+            }
+          }}
+          tabIndex={0}
+        >
+          <div className="mb-4 whitespace-pre-wrap">
+            {output.map((line, index) =>
+              line === '---LINE_BREAK---' ? (
+                <div className="h-4" key={index}></div>
+              ) : (
+                <div key={index}>{line}</div>
+              ),
+            )}
+          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-wrap items-center">
+              <span className="mb-2 mr-2 sm:mb-0">{getPrompt()}</span>
+              <input
+                className={`flex-grow ${theme.bg} ${theme.text} min-w-[200px] outline-none`}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                ref={inputRef}
+                type="text"
+                value={input}
+              />
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
