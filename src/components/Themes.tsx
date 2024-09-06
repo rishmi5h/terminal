@@ -2,15 +2,37 @@ import React from 'react';
 
 export type Theme = {
   bg: string;
+  border: string;
   text: string;
 };
 
 export const themes: Record<string, Theme> = {
-  default: { bg: 'bg-black', text: 'text-green-500' },
-  ubuntu: { bg: 'bg-purple-900', text: 'text-orange-200' },
-  'mac-terminal': { bg: 'bg-black', text: 'text-white' },
-  'windows-cmd': { bg: 'bg-black', text: 'text-gray-300' },
-  'windows-powershell': { bg: 'bg-blue-900', text: 'text-gray-100' },
+  default: {
+    bg: 'bg-black',
+    border: 'border-green-500',
+    font: 'font-mono',
+    text: 'text-green-500',
+  },
+  'mac-terminal': {
+    bg: 'bg-black',
+    border: 'border-gray-500',
+    text: 'text-white',
+  },
+  ubuntu: {
+    bg: 'bg-purple-900',
+    border: 'border-orange-200',
+    text: 'text-orange-200',
+  },
+  'windows-cmd': {
+    bg: 'bg-black',
+    border: 'border-gray-300',
+    text: 'text-gray-300',
+  },
+  'windows-powershell': {
+    bg: 'bg-blue-900',
+    border: 'border-gray-100',
+    text: 'text-gray-100',
+  },
 };
 
 interface ThemesProps {
