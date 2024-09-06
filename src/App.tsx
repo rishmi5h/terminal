@@ -241,7 +241,7 @@ function App() {
 
   return (
     <div
-      className={`${theme.bg} ${theme.text} min-h-screen p-4 font-mono`}
+      className={`${theme.bg} ${theme.text} min-h-screen p-4 ${theme.font}`}
       onKeyDown={(e) => {
         if (e.key === 'l' && e.ctrlKey) {
           e.preventDefault();
