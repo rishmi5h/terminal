@@ -1,20 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Terminal from './components/Terminal.tsx';
-import { Theme, themes } from './components/Themes.tsx';
-
-function getDefaultTheme(): keyof typeof themes {
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  if (userAgent.includes('mac')) {
-    return 'mac-terminal';
-  }
-  if (userAgent.includes('win')) {
-    return 'windows-cmd';
-  }
-  if (userAgent.includes('linux')) {
-    return 'ubuntu';
-  }
-  return 'default';
-}
+import { getDefaultTheme, Theme, themes } from './components/Themes.tsx';
 
 function App() {
   const [theme, setTheme] = useState<Theme>(() => {

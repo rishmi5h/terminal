@@ -34,6 +34,20 @@ export const themes: Record<string, Theme> = {
   },
 };
 
+export function getDefaultTheme(): keyof typeof themes {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  if (userAgent.includes('mac')) {
+    return 'mac-terminal';
+  }
+  if (userAgent.includes('win')) {
+    return 'windows-cmd';
+  }
+  if (userAgent.includes('linux')) {
+    return 'ubuntu';
+  }
+  return 'default';
+}
+
 interface ThemesProps {
   currentTheme: Theme;
   setTheme: (theme: Theme) => void;
