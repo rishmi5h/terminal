@@ -21,6 +21,13 @@ function App() {
     }
   }, [theme]);
 
+  useEffect(() => {
+    const currentThemeName = Object.keys(themes).find(
+      (key) => themes[key as keyof typeof themes] === theme,
+    );
+    document.title = `Rishabh Mishra | ${currentThemeName || 'Default'}`;
+  }, [theme]);
+
   return <Terminal theme={theme} setTheme={setTheme} />;
 }
 
