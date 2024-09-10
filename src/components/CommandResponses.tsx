@@ -25,7 +25,7 @@ export const commandResponses = {
   skills: [
     'My Technical Skills:',
     '- Programming Languages: Java, JavaScript, TypeScript, Python, SQL',
-    '- Frameworks & Libraries: React, Next.js, Tailwind CSS, Node.js, Spring Boot, Express.js',
+    '- Frameworks & Libraries: Spring Boot, React, Next.js, Tailwind CSS, Node.js',
     '- Tools: Git, Docker, Kubernetes, Jenkins, Airflow, AWS',
     '- Other: Kafka, Oracle DB, PostgreSQL, Redis',
     'Type "projects" to see my projects.',
